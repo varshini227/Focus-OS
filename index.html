@@ -10,19 +10,22 @@
     <link rel="apple-touch-icon" href="https://i.ibb.co/v4S8T5C/focus-os-icon.png">
     <meta name="theme-color" content="#050506">
     
-    <title>Focus OS | Commander Edition</title>
+    <title>Focus OS | Vibrant Edition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono&display=swap');
 
         :root {
             --bg: #050506;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.12);
             --text-pure: #ffffff;
             --text-dim: rgba(255, 255, 255, 0.5);
-            --leetcode-orange: #ffa116;
-            --lc-green: #00af9b;
-            --warning-red: #ff4d71;
+            
+            /* VIBRANT PALETTE */
+            --neon-cyan: #00E5FF;      /* Main Accent */
+            --neon-green: #00FF9C;     /* Success / Easy */
+            --neon-magenta: #FF00FF;   /* Warning / Hard */
+            --neon-yellow: #FFF700;    /* Objectives */
         }
 
         body {
@@ -33,6 +36,7 @@
             overflow-x: hidden;
         }
 
+        /* Scanline Overlay */
         body::after {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
@@ -40,12 +44,12 @@
         }
 
         .welcome-header { text-align: center; margin-bottom: 20px; transition: all 0.5s ease; }
-        .sys-status { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 4px; font-weight: 700; }
+        .sys-status { font-size: 0.65rem; color: var(--neon-cyan); letter-spacing: 4px; font-weight: 700; text-shadow: 0 0 10px var(--neon-cyan); }
         .welcome-msg { font-size: 1.4rem; font-weight: 900; margin: 5px 0; letter-spacing: 1px; }
-        .streak-box { font-size: 0.8rem; font-weight: 700; color: var(--lc-green); margin-top: 5px; }
+        .streak-box { font-size: 0.9rem; font-weight: 800; color: var(--neon-green); margin-top: 5px; text-shadow: 0 0 10px var(--neon-green); }
 
-        #clock { font-size: 2.8rem; font-weight: 200; margin: 5px 0; letter-spacing: -1px; }
-        #date { color: var(--leetcode-orange); letter-spacing: 3px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; }
+        #clock { font-size: 2.8rem; font-weight: 200; margin: 5px 0; letter-spacing: -1px; color: var(--text-pure); }
+        #date { color: var(--neon-cyan); letter-spacing: 3px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; }
 
         .dashboard-grid {
             display: grid; grid-template-columns: 1fr;
@@ -55,34 +59,42 @@
 
         .card {
             background: var(--card-bg); border: 1px solid var(--border);
-            padding: 22px; border-radius: 24px; backdrop-filter: blur(15px);
+            padding: 22px; border-radius: 28px; backdrop-filter: blur(20px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        #timer-display { font-size: 4.5rem; font-weight: 800; font-family: 'JetBrains Mono'; margin: 5px 0; text-align: center; }
+        /* POMODORO UI */
+        #timer-display { font-size: 4.5rem; font-weight: 800; font-family: 'JetBrains Mono'; margin: 5px 0; text-align: center; color: var(--neon-cyan); text-shadow: 0 0 20px rgba(0, 229, 255, 0.3); }
         .t-btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
-        .t-btn { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
-        .t-btn.active { background: var(--leetcode-orange); color: #000; }
+        .t-btn { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .t-btn.active { background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px var(--neon-cyan); border: none; }
 
-        .stat-val { font-size: 3.5rem; font-weight: 900; color: var(--leetcode-orange); line-height: 1; text-align: center; margin: 10px 0; }
+        /* STATS */
+        .stat-val { font-size: 3.5rem; font-weight: 900; color: var(--neon-cyan); line-height: 1; text-align: center; margin: 10px 0; text-shadow: 0 0 15px rgba(0, 229, 255, 0.4); }
         .stat-grid { display: flex; justify-content: space-around; margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px; }
         .stat-item { text-align: center; }
         .stat-item b { font-size: 1.1rem; display: block; }
         .stat-item small { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 1px; }
 
-        button.primary { background: var(--leetcode-orange); color: #000; border: none; padding: 18px; border-radius: 16px; font-weight: 800; width: 100%; font-size: 1rem; cursor: pointer; }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--leetcode-orange); padding: 10px; border-radius: 12px; margin-top: 10px; width: 100%; font-size: 0.7rem; font-weight: 700; cursor: pointer; }
+        /* BUTTONS */
+        button.primary { background: var(--neon-cyan); color: #000; border: none; padding: 18px; border-radius: 16px; font-weight: 800; width: 100%; font-size: 1rem; cursor: pointer; box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); transition: 0.3s; }
+        button.primary:active { transform: scale(0.98); box-shadow: 0 0 5px var(--neon-cyan); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--neon-cyan); padding: 10px; border-radius: 12px; margin-top: 10px; width: 100%; font-size: 0.7rem; font-weight: 700; cursor: pointer; }
 
+        /* OBJECTIVES */
         .task-input-group { display: flex; gap: 10px; margin-bottom: 15px; }
         .task-input-group input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; padding: 12px; color: #fff; outline: none; }
+        .task-input-group input:focus { border-color: var(--neon-yellow); }
         .todo-list { list-style: none; padding: 0; margin: 0; text-align: left; max-height: 150px; overflow-y: auto; }
         .todo-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .todo-item input { width: 22px; height: 22px; accent-color: var(--lc-green); }
+        .todo-item input { width: 20px; height: 20px; accent-color: var(--neon-green); }
         .done { text-decoration: line-through; opacity: 0.3; }
 
+        /* ZEN MODE (Focus Mode) */
         .zen-mode .distraction { opacity: 0; pointer-events: none; transform: scale(0.9); }
-        .zen-mode .card.timer-card { transform: translateY(-20px) scale(1.05); border-color: var(--leetcode-orange); box-shadow: 0 0 30px rgba(255, 161, 22, 0.2); }
+        .zen-mode .card.timer-card { transform: translateY(-20px) scale(1.05); border-color: var(--neon-cyan); box-shadow: 0 0 40px rgba(0, 229, 255, 0.25); }
         
         .hidden { display: none !important; }
     </style>
@@ -91,7 +103,7 @@
 
     <div class="welcome-header distraction">
         <div class="sys-status">SYSTEM ONLINE</div>
-        <h1 class="welcome-msg">WELCOME THE <span style="color: var(--leetcode-orange);">GREAT FUTURE CODER</span></h1>
+        <h1 class="welcome-msg">WELCOME THE <span style="color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan);">GREAT FUTURE CODER</span></h1>
         <div class="streak-box">🔥 STREAK: <span id="streak-days">0</span> DAYS</div>
     </div>
 
@@ -101,12 +113,12 @@
     <div id="dashboard" class="dashboard-grid">
         
         <div class="card distraction">
-            <small style="letter-spacing: 2px; opacity: 0.5;">LIVE MISSION DATA (API)</small>
+            <small style="letter-spacing: 2px; opacity: 0.5; color: var(--neon-green);">MISSION DATA (API)</small>
             <div id="total-solved" class="stat-val">...</div>
             <div class="stat-grid">
-                <div class="stat-item"><b id="easy-count" style="color: var(--lc-green);">0</b><small>EASY</small></div>
-                <div class="stat-item"><b id="med-count" style="color: var(--leetcode-orange);">0</b><small>MEDIUM</small></div>
-                <div class="stat-item"><b id="hard-count" style="color: var(--warning-red);">0</b><small>HARD</small></div>
+                <div class="stat-item"><b id="easy-count" style="color: var(--neon-green);">0</b><small>EASY</small></div>
+                <div class="stat-item"><b id="med-count" style="color: var(--neon-cyan);">0</b><small>MEDIUM</small></div>
+                <div class="stat-item"><b id="hard-count" style="color: var(--neon-magenta);">0</b><small>HARD</small></div>
             </div>
             <button class="btn-outline" onclick="initDashboard()">REFRESH API</button>
         </div>
@@ -121,13 +133,13 @@
         </div>
 
         <div class="card distraction">
-            <small style="letter-spacing: 2px; opacity: 0.5; display: block; margin-bottom: 10px;">MISSION OBJECTIVES</small>
+            <small style="letter-spacing: 2px; opacity: 0.5; display: block; margin-bottom: 10px; color: var(--neon-yellow);">MISSION OBJECTIVES</small>
             <div class="task-input-group">
-                <input type="text" id="todo-input" placeholder="New task..." onkeypress="if(event.key === 'Enter') addTodo()">
-                <button style="width: 50px; background: #fff; color: #000; border-radius: 12px; font-weight: 900; border:none; cursor:pointer;" onclick="addTodo()">+</button>
+                <input type="text" id="todo-input" placeholder="Add new task..." onkeypress="if(event.key === 'Enter') addTodo()">
+                <button style="width: 50px; background: var(--neon-yellow); color: #000; border-radius: 12px; font-weight: 900; border:none; cursor:pointer;" onclick="addTodo()">+</button>
             </div>
             <div id="todo-list" class="todo-list"></div>
-            <button class="btn-outline" style="color: var(--warning-red); border-color: var(--warning-red);" onclick="clearTodos()">WIPE OBJECTIVES</button>
+            <button class="btn-outline" style="color: var(--neon-magenta); border-color: var(--neon-magenta);" onclick="clearTodos()">WIPE OBJECTIVES</button>
         </div>
     </div>
 
@@ -160,22 +172,19 @@
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
+            osc.connect(gain); gain.connect(ctx.destination);
             osc.type = 'sine';
             osc.frequency.setValueAtTime(880, ctx.currentTime);
             gain.gain.setValueAtTime(0.1, ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1);
-            osc.start();
-            osc.stop(ctx.currentTime + 1);
+            osc.start(); osc.stop(ctx.currentTime + 1);
         }
 
         function updateStreak() {
             const today = new Date().toDateString();
             let streakData = JSON.parse(localStorage.getItem('focus_streak')) || { count: 0, lastDate: null };
             if (streakData.lastDate !== today) {
-                const yesterday = new Date();
-                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
                 if (streakData.lastDate === yesterday.toDateString()) { streakData.count++; } 
                 else { streakData.count = 1; }
                 streakData.lastDate = today;
@@ -223,7 +232,7 @@
                 <div class="todo-item">
                     <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleDone(${i})">
                     <span class="${t.done ? 'done' : ''}" style="flex:1;">${t.text}</span>
-                    <span onclick="deleteTask(${i})" style="color:var(--warning-red); font-weight:900; padding: 0 10px; cursor:pointer;">✕</span>
+                    <span onclick="deleteTask(${i})" style="color:var(--neon-magenta); font-weight:900; padding: 0 10px; cursor:pointer;">✕</span>
                 </div>
             `).join('');
             localStorage.setItem('focus_tasks', JSON.stringify(todos));
