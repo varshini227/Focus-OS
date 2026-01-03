@@ -33,21 +33,21 @@
         }
         .welcome-header { text-align: center; margin-bottom: 20px; transition: all 0.5s ease; }
         .sys-status { font-size: 0.65rem; color: var(--neon-cyan); letter-spacing: 4px; font-weight: 700; text-shadow: 0 0 10px var(--neon-cyan); }
-        .welcome-msg { font-size: 1.4rem; font-weight: 900; margin: 5px 0; letter-spacing: 1px; }
-        .streak-box { font-size: 0.9rem; font-weight: 800; color: var(--neon-green); margin-top: 5px; text-shadow: 0 0 10px var(--neon-green); }
+        .welcome-msg { font-size: 2rem; font-weight: 900; margin: 5px 0; letter-spacing: 1px; }
+        .streak-box { font-size: 1.2rem; font-weight: 800; color: var(--neon-green); margin-top: 5px; text-shadow: 0 0 10px var(--neon-green); }
         
         #clock { font-size: 2.8rem; font-weight: 200; margin: 5px 0; letter-spacing: -1px; }
         #date { color: var(--neon-cyan); letter-spacing: 3px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
         .rank-tag { font-size: 0.6rem; background: var(--neon-magenta); color: #000; padding: 2px 8px; border-radius: 4px; font-weight: 900; vertical-align: middle; margin-left: 5px; }
         
-        #quote-display { font-size: 0.75rem; color: var(--text-dim); font-style: italic; max-width: 300px; text-align: center; margin-bottom: 20px; min-height: 30px; }
+        #quote-display { font-size: 0.85rem; color: var(--neon-yellow); font-style: italic; max-width: 320px; text-align: center; margin-bottom: 20px; min-height: 40px; line-height: 1.4; text-shadow: 0 0 5px rgba(255, 247, 0, 0.3); }
 
         .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; max-width: 450px; transition: all 0.5s ease; }
         .card { background: var(--card-bg); border: 1px solid var(--border); padding: 22px; border-radius: 28px; backdrop-filter: blur(20px); position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
         #timer-display { font-size: 4.5rem; font-weight: 800; font-family: 'JetBrains Mono'; margin: 5px 0; text-align: center; color: var(--neon-cyan); text-shadow: 0 0 20px rgba(0, 229, 255, 0.3); }
         .t-btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
-        .t-btn { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
+        .t-btn { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #ffff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
         .t-btn.active { background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px var(--neon-cyan); border: none; }
         
         .stat-val { font-size: 3.5rem; font-weight: 900; color: var(--neon-cyan); text-align: center; margin: 10px 0; }
@@ -71,14 +71,14 @@
 </head>
 <body>
     <div class="welcome-header distraction">
-        <div class="sys-status">SYSTEM ONLINE</div>
+        
         <h1 class="welcome-msg">WELCOME THE <span style="color: var(--neon-cyan);">GREAT FUTURE CODER</span></h1>
         <div class="streak-box">🔥 STREAK: <span id="streak-days">0</span> DAYS</div>
     </div>
 
     <div id="clock">00:00:00</div>
-    <div id="date">COMMANDER VARSHINI <span id="rank-display" class="rank-tag">...</span></div>
-    <div id="quote-display" class="distraction">"Initialize protocol..."</div>
+    <div id="date">hello varsh let's code" <span id="rank-display" class="rank-tag">...</span></div>
+    <div id="quote-display" class="distraction">"Protocol: Initializing..."</div>
 
     <div id="dashboard" class="dashboard-grid">
         <div class="card distraction">
@@ -116,13 +116,16 @@
         const USERNAME = "VarshiniAshok"; 
         
         const QUOTES = [
-            "First, solve the problem. Then, write the code.",
-            "Java is to JavaScript what car is to Carpet.",
-            "Hardware is where the thoughts become reality.",
-            "Code is like humor. If you have to explain it, it’s bad.",
-            "Clean code always looks like it was written by someone who cares.",
-            "The best way to predict the future is to invent it.",
-            "Stay focused. Your future self is counting on you."
+            "Discipline is doing what needs to be done, even if you don't want to do it.",
+            "Amateurs sit and wait for inspiration, the rest of us just get up and go to work.",
+            "Hardwork beats talent when talent doesn't work hard.",
+            "The only way to master Verilog is to think in hardware, not just code.",
+            "Don't stop when you're tired. Stop when you're done.",
+            "Success is the sum of small efforts, repeated day in and day out.",
+            "Your only limit is the mind. Break the simulation.",
+            "Java is the foundation; Logic is the weapon.",
+            "Mistakes are proof that you are trying.",
+            "A year from now, you will wish you had started today."
         ];
 
         function updateClock() {
