@@ -52,14 +52,14 @@
 
         .welcome-header { text-align: center; margin-bottom: 20px; }
         .sys-status { font-size: 0.65rem; color: var(--neon-cyan); letter-spacing: 4px; font-weight: 700; text-shadow: 0 0 10px var(--neon-cyan); }
-        .welcome-msg { font-size: 1.4rem; font-weight: 900; margin: 5px 0; letter-spacing: 1px; }
-        .streak-box { font-size: 0.9rem; font-weight: 800; color: var(--neon-green); margin-top: 5px; }
+        .welcome-msg { font-size: 2.2rem; font-weight: 900; margin: 5px 0; letter-spacing: 1px; }
+        .streak-box { font-size: 1.3rem; font-weight: 800; color: var(--neon-green); margin-top: 5px; }
 
         #clock { font-size: 2.8rem; font-weight: 200; margin: 5px 0; letter-spacing: -1px; }
         #date { color: var(--neon-cyan); letter-spacing: 3px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
         .rank-tag { font-size: 0.6rem; background: var(--neon-magenta); color: #000; padding: 2px 8px; border-radius: 4px; font-weight: 900; vertical-align: middle; margin-left: 5px; }
         
-        #quote-display { font-size: 0.85rem; color: var(--neon-yellow); font-style: italic; max-width: 350px; text-align: center; margin-bottom: 25px; min-height: 40px; line-height: 1.5; }
+        #quote-display { font-size: 2.5rem; color: var(--neon-yellow); font-style: italic; max-width: 350px; text-align: center; margin-bottom: 25px; min-height: 40px; line-height: 1.5; }
 
         .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; max-width: 450px; }
         .card { background: var(--card-bg); border: 1px solid var(--border); padding: 22px; border-radius: 28px; backdrop-filter: blur(20px); position: relative; }
@@ -121,7 +121,7 @@
     </div>
 
     <div id="clock">00:00:00</div>
-    <div id="date">COMMANDER VARSHINI <span id="rank-display" class="rank-tag">...</span></div>
+    <div id="date">hello varsh..let's start coding <span id="rank-display" class="rank-tag">...</span></div>
     <div id="quote-display" class="distraction">"Protocol initializing..."</div>
 
     <div class="progress-container distraction">
@@ -177,7 +177,7 @@
         function updateClock() {
             const n = new Date();
             document.getElementById('clock').textContent = n.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-            document.getElementById('date').innerHTML = `COMMANDER VARSHINI <span id="rank-display" class="rank-tag">...</span> | ` + n.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'}).toUpperCase();
+            document.getElementById('date').innerHTML = 'hello varsh..lets tart code' <span id="rank-display" class="rank-tag">...</span> | ` + n.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'}).toUpperCase();
         }
         setInterval(updateClock, 1000);
 
