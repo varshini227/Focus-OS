@@ -131,7 +131,7 @@
         function updateClock() {
             const n = new Date();
             document.getElementById('clock').textContent = n.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-            document.getElementById('date').innerHTML = `COMMANDER VARSHINI <span id="rank-display" class="rank-tag">...</span> | ` + n.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'}).toUpperCase();
+            document.getElementById('date').innerHTML = `Hello varsh lets code today' <span id="rank-display" class="rank-tag">...</span> | ` + n.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'}).toUpperCase();
         }
         setInterval(updateClock, 1000);
 
