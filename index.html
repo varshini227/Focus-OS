@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Focus OS">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/v4S8T5C/focus-os-icon.png">
     <meta name="theme-color" content="#050506">
-    <title>Focus OS | Commander Edition</title>
+    
+    <title>Focus OS | Ultimate Elite Edition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono&display=swap');
 
@@ -31,43 +33,40 @@
             overflow-x: hidden;
         }
 
-        /* Scanline CRT Effect */
         body::after {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
             background-size: 100% 4px; z-index: 1000; pointer-events: none;
         }
 
-        /* Documentation Drawer */
-        #doc-panel { position: fixed; right: -310px; top: 0; width: 280px; height: 100%; background: #0a0a0c; border-left: 2px solid var(--neon-cyan); z-index: 2000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding: 25px; overflow-y: auto; box-shadow: -10px 0 30px rgba(0,0,0,0.9); }
+        /* Documentation Panel */
+        #doc-panel { position: fixed; right: -300px; top: 0; width: 280px; height: 100%; background: #0a0a0c; border-left: 1px solid var(--neon-cyan); z-index: 2000; transition: 0.4s; padding: 20px; overflow-y: auto; box-shadow: -10px 0 30px rgba(0,0,0,0.8); }
         #doc-panel.open { right: 0; }
-        .doc-section { margin-bottom: 25px; font-size: 0.8rem; }
-        .doc-section h4 { color: var(--neon-yellow); margin-bottom: 8px; border-bottom: 1px solid var(--border); letter-spacing: 1px; }
-        code { font-family: 'JetBrains Mono'; color: var(--neon-green); display: block; background: rgba(0,0,0,0.4); padding: 8px; margin: 5px 0; border-radius: 6px; font-size: 0.75rem; }
-        .external-link { color: var(--neon-cyan); text-decoration: none; font-weight: bold; border: 1px solid var(--neon-cyan); padding: 5px 10px; border-radius: 5px; display: inline-block; margin-top: 10px; transition: 0.3s; }
-        .external-link:hover { background: var(--neon-cyan); color: #000; }
+        .doc-section { margin-bottom: 20px; font-size: 0.8rem; }
+        .doc-section h4 { color: var(--neon-yellow); margin-bottom: 5px; border-bottom: 1px solid var(--border); }
+        code { font-family: 'JetBrains Mono'; color: var(--neon-green); display: block; background: rgba(0,0,0,0.3); padding: 5px; margin: 5px 0; border-radius: 4px; }
 
         /* Progress Bar */
-        .progress-container { width: 100%; max-width: 450px; background: rgba(255,255,255,0.1); height: 8px; border-radius: 10px; margin-bottom: 25px; overflow: hidden; border: 1px solid var(--border); }
-        #progress-fill { height: 100%; width: 0%; background: var(--neon-green); box-shadow: 0 0 15px var(--neon-green); transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .progress-container { width: 100%; max-width: 450px; background: rgba(255,255,255,0.1); height: 6px; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+        #progress-fill { height: 100%; width: 0%; background: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); transition: width 0.5s ease; }
 
-        .welcome-header { text-align: center; margin-bottom: 20px; }
+        .welcome-header { text-align: center; margin-bottom: 20px; transition: all 0.5s ease; }
         .sys-status { font-size: 0.65rem; color: var(--neon-cyan); letter-spacing: 4px; font-weight: 700; text-shadow: 0 0 10px var(--neon-cyan); }
-        .welcome-msg { font-size: 2.2rem; font-weight: 900; margin: 5px 0; letter-spacing: 1px; }
-        .streak-box { font-size: 1.3rem; font-weight: 800; color: var(--neon-green); margin-top: 5px; }
+        .welcome-msg { font-size: 1.4rem; font-weight: 900; margin: 5px 0; letter-spacing: 1px; }
+        .streak-box { font-size: 0.9rem; font-weight: 800; color: var(--neon-green); margin-top: 5px; text-shadow: 0 0 10px var(--neon-green); }
 
         #clock { font-size: 2.8rem; font-weight: 200; margin: 5px 0; letter-spacing: -1px; }
         #date { color: var(--neon-cyan); letter-spacing: 3px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
         .rank-tag { font-size: 0.6rem; background: var(--neon-magenta); color: #000; padding: 2px 8px; border-radius: 4px; font-weight: 900; vertical-align: middle; margin-left: 5px; }
         
-        #quote-display { font-size: 1.5rem; color: var(--neon-yellow); font-style: italic; max-width: 350px; text-align: center; margin-bottom: 25px; min-height: 40px; line-height: 1.5; }
+        #quote-display { font-size: 0.85rem; color: var(--neon-yellow); font-style: italic; max-width: 320px; text-align: center; margin-bottom: 20px; min-height: 40px; line-height: 1.4; }
 
-        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; max-width: 450px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border); padding: 22px; border-radius: 28px; backdrop-filter: blur(20px); position: relative; }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; max-width: 450px; transition: all 0.5s ease; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); padding: 22px; border-radius: 28px; backdrop-filter: blur(20px); position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 
-        #timer-display { font-size: 4.5rem; font-weight: 800; font-family: 'JetBrains Mono'; margin: 10px 0; text-align: center; color: var(--neon-cyan); text-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
+        #timer-display { font-size: 4.5rem; font-weight: 800; font-family: 'JetBrains Mono'; margin: 5px 0; text-align: center; color: var(--neon-cyan); text-shadow: 0 0 20px rgba(0, 229, 255, 0.3); }
         .t-btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
-        .t-btn { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .t-btn { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
         .t-btn.active { background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px var(--neon-cyan); border: none; }
 
         .stat-val { font-size: 3.5rem; font-weight: 900; color: var(--neon-cyan); text-align: center; margin: 10px 0; }
@@ -76,41 +75,36 @@
         .stat-item b { font-size: 1.1rem; display: block; }
         .stat-item small { font-size: 0.6rem; color: var(--text-dim); }
 
-        button.primary { background: var(--neon-cyan); color: #000; border: none; padding: 18px; border-radius: 16px; font-weight: 800; width: 100%; font-size: 1rem; cursor: pointer; box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); transition: 0.3s; }
-        button.primary:active { transform: scale(0.97); }
+        button.primary { background: var(--neon-cyan); color: #000; border: none; padding: 18px; border-radius: 16px; font-weight: 800; width: 100%; font-size: 1rem; cursor: pointer; box-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--neon-cyan); padding: 10px; border-radius: 12px; margin-top: 10px; width: 100%; font-size: 0.7rem; font-weight: 700; cursor: pointer; }
 
-        .todo-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .task-input-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        .task-input-group input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; padding: 12px; color: #fff; outline: none; }
+        .todo-list { list-style: none; padding: 0; margin: 0; text-align: left; max-height: 150px; overflow-y: auto; }
+        .todo-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .todo-item input { width: 18px; height: 18px; accent-color: var(--neon-green); }
         .done { text-decoration: line-through; opacity: 0.3; }
 
-        .zen-mode .distraction { opacity: 0; pointer-events: none; transform: translateY(20px); transition: 0.5s; }
-        .zen-mode .card.timer-card { transform: translateY(-80px) scale(1.05); border-color: var(--neon-cyan); box-shadow: 0 0 40px rgba(0, 229, 255, 0.25); }
+        .zen-mode .distraction { opacity: 0; pointer-events: none; transform: scale(0.9); }
+        .zen-mode .card.timer-card { transform: translateY(-50px) scale(1.05); border-color: var(--neon-cyan); box-shadow: 0 0 40px rgba(0, 229, 255, 0.25); }
     </style>
 </head>
 <body>
 
     <div id="doc-panel">
         <button onclick="toggleDocs()" style="background:none; border:none; color:var(--neon-magenta); font-weight:900; float:right; cursor:pointer;">✕ CLOSE</button>
-        <h3 style="color:var(--neon-cyan); margin-top:0;">PROTOCOL MANUAL</h3>
-        
+        <h3 style="color:var(--neon-cyan)">PROTOCOL MANUAL</h3>
         <div class="doc-section">
-            <h4>DSA MASTER RESOURCES</h4>
-            <a href="https://www.techinterviewhandbook.org/algorithms/study-cheatsheet/" target="_blank" class="external-link">🌐 ACCESS ALGO CHEATSHEET</a>
+            <h4>JAVA BASICS</h4>
+            <code>System.out.println("");</code>
+            <code>public static void main</code>
+            <code>Scanner sc = new Scanner();</code>
         </div>
-
         <div class="doc-section">
-            <h4>JAVA PROTOCOL</h4>
-            <code>for(int i=0; i<n; i++) { }</code>
-            <code>Map<K,V> map = new HashMap<>();</code>
-            <code>PriorityQueue<Integer> pq;</code>
-        </div>
-
-        <div class="doc-section">
-            <h4>VERILOG LOGIC</h4>
+            <h4>VERILOG</h4>
             <code>always @(posedge clk)</code>
-            <code>assign out = (a & b) | c;</code>
-            <code>initial begin ... end</code>
+            <code>assign out = a & b;</code>
+            <code>module name (input, output);</code>
         </div>
     </div>
 
@@ -118,28 +112,27 @@
         <div class="sys-status">SYSTEM ONLINE</div>
         <h1 class="welcome-msg">WELCOME THE <span style="color: var(--neon-cyan);">GREAT FUTURE CODER</span></h1>
         <div class="streak-box">🔥 STREAK: <span id="streak-days">0</span> DAYS</div>
-        <button class="btn-outline" style="width: auto; padding: 8px 20px; margin-top:15px;" onclick="toggleDocs()">📖 OPEN PROTOCOL MANUAL</button>
+        <button class="btn-outline" style="width: auto; padding: 5px 15px;" onclick="toggleDocs()">📖 OPEN CHEAT SHEET</button>
     </div>
 
     <div id="clock">00:00:00</div>
-    <div id="date">hello varsh..let's start coding <span id="rank-display" class="rank-tag">...</span></div>
-    <div id="quote-display" class="distraction">"Protocol initializing..."</div>
+    <div id="date">COMMANDER VARSHINI <span id="rank-display" class="rank-tag">...</span></div>
+    <div id="quote-display" class="distraction">"Initialize protocol..."</div>
 
     <div class="progress-container distraction">
         <div id="progress-fill"></div>
     </div>
 
     <div id="dashboard" class="dashboard-grid">
-        
         <div class="card distraction">
-            <small style="letter-spacing: 2px; color: var(--neon-green); font-weight: bold;">MISSION DATA (API)</small>
+            <small style="letter-spacing: 2px; opacity: 0.5; color: var(--neon-green);">MISSION DATA (API)</small>
             <div id="total-solved" class="stat-val">...</div>
             <div class="stat-grid">
                 <div class="stat-item"><b id="easy-count" style="color: var(--neon-green);">0</b><small>EASY</small></div>
                 <div class="stat-item"><b id="med-count" style="color: var(--neon-cyan);">0</b><small>MEDIUM</small></div>
                 <div class="stat-item"><b id="hard-count" style="color: var(--neon-magenta);">0</b><small>HARD</small></div>
             </div>
-            <button class="btn-outline" onclick="initDashboard()">REFRESH MISSION DATA</button>
+            <button class="btn-outline" onclick="initDashboard()">REFRESH API</button>
         </div>
 
         <div class="card timer-card">
@@ -152,10 +145,10 @@
         </div>
 
         <div class="card distraction">
-            <small style="letter-spacing: 2px; color: var(--neon-yellow); font-weight: bold;">MISSION OBJECTIVES</small>
-            <div style="display:flex; gap:10px; margin: 15px 0;">
-                <input type="text" id="todo-input" placeholder="New Mission..." onkeypress="if(event.key === 'Enter') addTodo()" style="flex:1; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:12px; padding:12px; color:#fff; outline:none;">
-                <button onclick="addTodo()" style="width:50px; background:var(--neon-yellow); color:#000; border-radius:12px; font-weight:900; border:none; cursor:pointer;">+</button>
+            <small style="letter-spacing: 2px; opacity: 0.5; display: block; margin-bottom: 10px; color: var(--neon-yellow);">MISSION OBJECTIVES</small>
+            <div class="task-input-group">
+                <input type="text" id="todo-input" placeholder="New task..." onkeypress="if(event.key === 'Enter') addTodo()">
+                <button style="width: 50px; background: var(--neon-yellow); color: #000; border-radius: 12px; font-weight: 900; border:none;" onclick="addTodo()">+</button>
             </div>
             <div id="todo-list" class="todo-list"></div>
             <button class="btn-outline" style="color: var(--neon-magenta); border-color: var(--neon-magenta);" onclick="clearTodos()">WIPE OBJECTIVES</button>
@@ -170,15 +163,13 @@
             "The only way to master Verilog is to think in hardware.",
             "Don't stop when you're tired. Stop when you're done.",
             "Stay focused. Your future self is counting on you.",
-            "A year from now, you will wish you had started today.",
-            "Pattern recognition is the secret to solving any DSA problem.",
-            "First solve the problem, then write the code."
+            "A year from now, you will wish you had started today."
         ];
 
         function updateClock() {
             const n = new Date();
             document.getElementById('clock').textContent = n.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-            document.getElementById('date').innerHTML = 'hello varsh..lets tart code' <span id="rank-display" class="rank-tag">...</span> | ` + n.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'}).toUpperCase();
+            document.getElementById('date').innerHTML = `COMMANDER VARSHINI <span id="rank-display" class="rank-tag">...</span> | ` + n.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'}).toUpperCase();
         }
         setInterval(updateClock, 1000);
 
@@ -232,7 +223,7 @@
                 document.body.classList.add('zen-mode');
                 timer = setInterval(() => {
                     if(timeLeft > 0) { timeLeft--; updateTimerUI(); }
-                    else { clearInterval(timer); document.body.classList.remove('zen-mode'); playMissionSound(); alert("Phase Complete, Commander."); }
+                    else { clearInterval(timer); document.body.classList.remove('zen-mode'); playMissionSound(); alert("Phase Complete."); }
                 }, 1000);
                 document.getElementById('start-btn').innerText = "PAUSE";
             }
@@ -258,19 +249,8 @@
         function deleteTask(i) { todos.splice(i, 1); renderTodos(); }
         function clearTodos() { if(confirm("Wipe all objectives?")) { todos = []; renderTodos(); } }
 
-        // Boot Sequence
         updateClock(); initDashboard(); renderTodos(); 
         document.getElementById('quote-display').innerText = `"${QUOTES[Math.floor(Math.random() * QUOTES.length)]}"`;
-        
-        // Streak Logic
-        const today = new Date().toDateString();
-        let sData = JSON.parse(localStorage.getItem('focus_streak')) || { count: 0, last: null };
-        if(sData.last !== today) {
-            const yest = new Date(); yest.setDate(yest.getDate()-1);
-            if(sData.last === yest.toDateString()) sData.count++; else sData.count = 1;
-            sData.last = today; localStorage.setItem('focus_streak', JSON.stringify(sData));
-        }
-        document.getElementById('streak-days').innerText = sData.count;
     </script>
 </body>
 </html>
