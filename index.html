@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="https://i.ibb.co/v4S8T5C/focus-os-icon.png">
     <meta name="theme-color" content="#050506">
     
-    <title>Focus OS | APK Edition</title>
+    <title>Focus OS | Commander Edition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono&display=swap');
 
@@ -33,19 +33,23 @@
             overflow-x: hidden;
         }
 
-        /* CRT/Scanline App Effect */
         body::after {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
             background-size: 100% 4px; z-index: 1000; pointer-events: none;
         }
 
-        #clock { font-size: 3.5rem; font-weight: 200; margin: 10px 0; letter-spacing: -2px; }
+        .welcome-header { text-align: center; margin-bottom: 20px; transition: all 0.5s ease; }
+        .sys-status { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 4px; font-weight: 700; }
+        .welcome-msg { font-size: 1.4rem; font-weight: 900; margin: 5px 0; letter-spacing: 1px; }
+        .streak-box { font-size: 0.8rem; font-weight: 700; color: var(--lc-green); margin-top: 5px; }
+
+        #clock { font-size: 2.8rem; font-weight: 200; margin: 5px 0; letter-spacing: -1px; }
         #date { color: var(--leetcode-orange); letter-spacing: 3px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; }
 
         .dashboard-grid {
             display: grid; grid-template-columns: 1fr;
-            gap: 15px; width: 100%; max-width: 450px; margin-top: 10px;
+            gap: 15px; width: 100%; max-width: 450px;
             transition: all 0.5s ease;
         }
 
@@ -56,24 +60,20 @@
             position: relative;
         }
 
-        /* POMODORO UI */
         #timer-display { font-size: 4.5rem; font-weight: 800; font-family: 'JetBrains Mono'; margin: 5px 0; text-align: center; }
         .t-btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
         .t-btn { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
         .t-btn.active { background: var(--leetcode-orange); color: #000; }
 
-        /* STATS */
         .stat-val { font-size: 3.5rem; font-weight: 900; color: var(--leetcode-orange); line-height: 1; text-align: center; margin: 10px 0; }
         .stat-grid { display: flex; justify-content: space-around; margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px; }
         .stat-item { text-align: center; }
         .stat-item b { font-size: 1.1rem; display: block; }
         .stat-item small { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 1px; }
 
-        /* BUTTONS */
         button.primary { background: var(--leetcode-orange); color: #000; border: none; padding: 18px; border-radius: 16px; font-weight: 800; width: 100%; font-size: 1rem; cursor: pointer; }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--leetcode-orange); padding: 10px; border-radius: 12px; margin-top: 10px; width: 100%; font-size: 0.7rem; font-weight: 700; cursor: pointer; }
 
-        /* OBJECTIVES */
         .task-input-group { display: flex; gap: 10px; margin-bottom: 15px; }
         .task-input-group input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; padding: 12px; color: #fff; outline: none; }
         .todo-list { list-style: none; padding: 0; margin: 0; text-align: left; max-height: 150px; overflow-y: auto; }
@@ -81,21 +81,27 @@
         .todo-item input { width: 22px; height: 22px; accent-color: var(--lc-green); }
         .done { text-decoration: line-through; opacity: 0.3; }
 
-        /* ZEN MODE (Focus Mode) */
-        .zen-mode .distraction { opacity: 0; pointer-events: none; transform: scale(0.9); position: absolute; }
-        .zen-mode .card.timer-card { transform: translateY(60px) scale(1.05); border-color: var(--leetcode-orange); box-shadow: 0 0 30px rgba(255, 161, 22, 0.2); }
+        .zen-mode .distraction { opacity: 0; pointer-events: none; transform: scale(0.9); }
+        .zen-mode .card.timer-card { transform: translateY(-20px) scale(1.05); border-color: var(--leetcode-orange); box-shadow: 0 0 30px rgba(255, 161, 22, 0.2); }
         
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
+    <div class="welcome-header distraction">
+        <div class="sys-status">SYSTEM ONLINE</div>
+        <h1 class="welcome-msg">WELCOME THE <span style="color: var(--leetcode-orange);">GREAT FUTURE CODER</span></h1>
+        <div class="streak-box">🔥 STREAK: <span id="streak-days">0</span> DAYS</div>
+    </div>
+
     <div id="clock">00:00:00</div>
     <div id="date">COMMANDER VARSHINI</div>
 
     <div id="dashboard" class="dashboard-grid">
+        
         <div class="card distraction">
-            <small style="letter-spacing: 2px; opacity: 0.5;">LIVE MISSION DATA</small>
+            <small style="letter-spacing: 2px; opacity: 0.5;">LIVE MISSION DATA (API)</small>
             <div id="total-solved" class="stat-val">...</div>
             <div class="stat-grid">
                 <div class="stat-item"><b id="easy-count" style="color: var(--lc-green);">0</b><small>EASY</small></div>
@@ -118,7 +124,7 @@
             <small style="letter-spacing: 2px; opacity: 0.5; display: block; margin-bottom: 10px;">MISSION OBJECTIVES</small>
             <div class="task-input-group">
                 <input type="text" id="todo-input" placeholder="New task..." onkeypress="if(event.key === 'Enter') addTodo()">
-                <button style="width: 50px; background: #fff; color: #000; border-radius: 12px; font-weight: 900;" onclick="addTodo()">+</button>
+                <button style="width: 50px; background: #fff; color: #000; border-radius: 12px; font-weight: 900; border:none; cursor:pointer;" onclick="addTodo()">+</button>
             </div>
             <div id="todo-list" class="todo-list"></div>
             <button class="btn-outline" style="color: var(--warning-red); border-color: var(--warning-red);" onclick="clearTodos()">WIPE OBJECTIVES</button>
@@ -126,18 +132,17 @@
     </div>
 
     <script>
-        // HANDLE: VarshiniAshok
         const USERNAME = "VarshiniAshok"; 
 
-        // 1. Clock Logic
         function updateClock() {
             const n = new Date();
-            document.getElementById('clock').textContent = n.toLocaleTimeString([], {hour12: false});
+            document.getElementById('clock').textContent = n.toLocaleTimeString([], { 
+                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true 
+            });
             document.getElementById('date').textContent = "COMMANDER VARSHINI | " + n.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'}).toUpperCase();
         }
         setInterval(updateClock, 1000);
 
-        // 2. LeetCode API Sync
         async function initDashboard() {
             try {
                 const res = await fetch(`https://alfa-leetcode-api.onrender.com/${USERNAME}/solved`);
@@ -151,7 +156,34 @@
             }
         }
 
-        // 3. Timer & Zen Mode Logic
+        function playMissionSound() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(880, ctx.currentTime);
+            gain.gain.setValueAtTime(0.1, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1);
+            osc.start();
+            osc.stop(ctx.currentTime + 1);
+        }
+
+        function updateStreak() {
+            const today = new Date().toDateString();
+            let streakData = JSON.parse(localStorage.getItem('focus_streak')) || { count: 0, lastDate: null };
+            if (streakData.lastDate !== today) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                if (streakData.lastDate === yesterday.toDateString()) { streakData.count++; } 
+                else { streakData.count = 1; }
+                streakData.lastDate = today;
+                localStorage.setItem('focus_streak', JSON.stringify(streakData));
+            }
+            document.getElementById('streak-days').innerText = streakData.count;
+        }
+
         let timeLeft = 1500; let timer = null;
         function setTimer(m, b) {
             clearInterval(timer); timer = null;
@@ -174,20 +206,24 @@
                 document.body.classList.add('zen-mode');
                 timer = setInterval(() => {
                     if(timeLeft > 0) { timeLeft--; updateTimerUI(); }
-                    else { clearInterval(timer); document.body.classList.remove('zen-mode'); alert("Phase Complete."); }
+                    else { 
+                        clearInterval(timer); 
+                        document.body.classList.remove('zen-mode'); 
+                        playMissionSound();
+                        alert("Phase Complete, Commander."); 
+                    }
                 }, 1000);
                 document.getElementById('start-btn').innerText = "PAUSE";
             }
         }
 
-        // 4. Persistence Tasks
         let todos = JSON.parse(localStorage.getItem('focus_tasks')) || [];
         function renderTodos() {
             document.getElementById('todo-list').innerHTML = todos.map((t, i) => `
                 <div class="todo-item">
                     <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleDone(${i})">
                     <span class="${t.done ? 'done' : ''}" style="flex:1;">${t.text}</span>
-                    <span onclick="deleteTask(${i})" style="color:var(--warning-red); font-weight:900; padding: 0 10px;">✕</span>
+                    <span onclick="deleteTask(${i})" style="color:var(--warning-red); font-weight:900; padding: 0 10px; cursor:pointer;">✕</span>
                 </div>
             `).join('');
             localStorage.setItem('focus_tasks', JSON.stringify(todos));
@@ -203,8 +239,7 @@
         function deleteTask(i) { todos.splice(i, 1); renderTodos(); }
         function clearTodos() { if(confirm("Wipe all objectives?")) { todos = []; renderTodos(); } }
 
-        // Boot system
-        updateClock(); initDashboard(); renderTodos();
+        updateClock(); initDashboard(); renderTodos(); updateStreak();
     </script>
 </body>
 </html>
